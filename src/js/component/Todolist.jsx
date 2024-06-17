@@ -19,6 +19,10 @@ function Todolist() {
     setState({ tasks: state.tasks.map(t => t.id === taskId ? (t.isEditable ? { ...t, ...task } : t) : t) });
   }
 
+  function toggleTaskCompleted(taskId) {
+    setState({ tasks: state.tasks.map(t => t.id === taskId? {...t, isCompleted:!t.isCompleted } : t) });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const taskName = e.target.elements.task.value;
@@ -52,7 +56,11 @@ function Todolist() {
                 <li key={task.id} className="list-group-item px-3" >
                   <div className="d-flex flex-row">
                     <input
-                      type="checkbox" className="" id="flexCheckDefault"
+                      type="checkbox" 
+                      checked={task.isCompleted}
+                      onChange={() => toggleTaskCompleted(task.id)}
+                      className=""
+                      id="flexCheckDefault"
                     />
                     <input
                       type="text"
@@ -68,10 +76,19 @@ function Todolist() {
                 </li>
               ))}
             </ul>
-          </div>
+            {state.tasks.length > 0 && (
+              <div className="footer text-center">
+                {state.tasks.filter(task =>!task.isCompleted).length === 1? (
+                  <p>1 remaining task</p>
+                ) : (
+                  <p>{state.tasks.filter(task =>!task.isCompleted).length} remaining task</p>
+                )}
+              </div>
+            )}
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
