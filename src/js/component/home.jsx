@@ -3,7 +3,9 @@ import Todolist from "./Todolist.jsx";
 
 const Home = () => {
   return (
+    <div className="fondo-principal">
     <Todolist />
+    </div>
   );
 };
 
