@@ -7,19 +7,26 @@ const initialState = {
 function Todolist() {
   const [state, setState] = useState(initialState);
     function addTask(task) {
-      setState((prevState => { return { tasks: [...prevState.tasks, { ...task, isEditable: false }] } }));
+      setState((prevState => {
+         return { tasks: [...prevState.tasks, { ...task, isEditable: false }] } }));
   }
 
   function deleteTask(taskId) {
-    setState({ tasks: state.tasks.filter(task => task.id !== taskId) });
+    setState((prevState) => {
+      return { tasks: prevState.tasks.filter((task) => task.id !== taskId) };
+    });
   }
 
   function updateTask(taskId, task) {
-    setState({ tasks: state.tasks.map(t => t.id === taskId ? (t.isEditable ? { ...t, ...task } : t) : t) });
+    setState((prevState) => {
+      return { tasks: prevState.tasks.map(t => t.id === taskId ? (t.isEditable ? { ...t, ...task } : t) : t) };
+    });
   }
-
+  
   function toggleTaskCompleted(taskId) {
-    setState({ tasks: state.tasks.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t) });
+    setState((prevState) => {
+      return { tasks: prevState.tasks.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t) };
+    });
   }
 
   function handleSubmit(e) {
