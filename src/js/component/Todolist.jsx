@@ -6,9 +6,8 @@ const initialState = {
 
 function Todolist() {
   const [state, setState] = useState(initialState);
-
-  function addTask(task) {
-    setState({ tasks: [...state.tasks, { ...task, isEditable: false }] });
+    function addTask(task) {
+      setState((prevState => { return { tasks: [...prevState.tasks, { ...task, isEditable: false }] } }));
   }
 
   function deleteTask(taskId) {
@@ -20,7 +19,7 @@ function Todolist() {
   }
 
   function toggleTaskCompleted(taskId) {
-    setState({ tasks: state.tasks.map(t => t.id === taskId? {...t, isCompleted:!t.isCompleted } : t) });
+    setState({ tasks: state.tasks.map(t => t.id === taskId ? { ...t, isCompleted: !t.isCompleted } : t) });
   }
 
   function handleSubmit(e) {
@@ -56,7 +55,7 @@ function Todolist() {
                 <li key={task.id} className="list-group-item px-3" >
                   <div className="d-flex flex-row">
                     <input
-                      type="checkbox" 
+                      type="checkbox"
                       checked={task.isCompleted}
                       onChange={() => toggleTaskCompleted(task.id)}
                       className=""
@@ -78,17 +77,17 @@ function Todolist() {
             </ul>
             {state.tasks.length > 0 && (
               <div className="footer text-center">
-                {state.tasks.filter(task =>!task.isCompleted).length === 1? (
+                {state.tasks.filter(task => !task.isCompleted).length === 1 ? (
                   <p>1 remaining task</p>
                 ) : (
-                  <p>{state.tasks.filter(task =>!task.isCompleted).length} remaining task</p>
+                  <p>{state.tasks.filter(task => !task.isCompleted).length} remaining task</p>
                 )}
               </div>
             )}
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
